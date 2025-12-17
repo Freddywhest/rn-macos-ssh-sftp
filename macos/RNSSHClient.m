@@ -1,9 +1,13 @@
-#import <React/RCTUtils.h>
 #import "RNSSHClient.h"
-#import "SSHClient.h"
+
+#import <React/RCTLog.h>
+#import <React/RCTConvert.h>
+
+#import "NMSSH/NMSSH.h"
+#import "NMSSH/NMSFTP.h"
 
 @implementation RNSSHClient {
-    NSMutableDictionary* _clientPool;
+    NSMutableDictionary *_clientPool;
 }
 
 RCT_EXPORT_MODULE();
@@ -18,138 +22,133 @@ RCT_EXPORT_MODULE();
     return @[@"Shell", @"DownloadProgress", @"UploadProgress"];
 }
 
-- (NSMutableDictionary*) clientPool {
+#pragma mark - Client Pool
+
+- (NSMutableDictionary *)clientPool
+{
     if (!_clientPool) {
         _clientPool = [NSMutableDictionary new];
     }
     return _clientPool;
 }
 
-- (SSHClient*) clientForKey:(nonnull NSString*)key {
-    return [[self clientPool] objectForKey:key];
+- (SSHClient *)clientForKey:(NSString *)key
+{
+    return self.clientPool[key];
 }
 
-- (BOOL)isConnected:(NMSSHSession *)session
-       withCallback:(RCTResponseSenderBlock)callback {
-    if (session && session.isConnected && session.isAuthorized) {
-        return true;
-    } else {
-        RCTLogWarn(@"Session not connected");
-        if (callback) {
-            callback(@[@"Session not connected"]);
-        }
-        return false;
-    }
+#pragma mark - Delegate Events
+
+- (void)shellEvent:(NSString *)event withKey:(NSString *)key
+{
+    [self sendEventWithName:@"Shell"
+                       body:@{
+                           @"key": key ?: @"",
+                           @"data": event ?: @""
+                       }];
 }
 
-- (BOOL)isSFTPConnected:(NMSFTP *)sftpSession
-           withCallback:(RCTResponseSenderBlock)callback {
-    if (sftpSession && sftpSession.connected) {
-        return true;
-    } else {
-        RCTLogWarn(@"SFTP not connected");
-        if (callback) {
-            callback(@[@"SFTP not connected"]);
-        }
-        return false;
-    }
+- (void)downloadProgressEvent:(int)progress withKey:(NSString *)key
+{
+    [self sendEventWithName:@"DownloadProgress"
+                       body:@{
+                           @"key": key ?: @"",
+                           @"progress": @(progress)
+                       }];
 }
+
+- (void)uploadProgressEvent:(int)progress withKey:(NSString *)key
+{
+    [self sendEventWithName:@"UploadProgress"
+                       body:@{
+                           @"key": key ?: @"",
+                           @"progress": @(progress)
+                       }];
+}
+
+#pragma mark - Connection
 
 RCT_EXPORT_METHOD(connectToHost:(NSString *)host
                   port:(NSInteger)port
                   withUsername:(NSString *)username
                   passwordOrKey:(id)passwordOrKey
-                  withKey:(nonnull NSString*)key
+                  withKey:(NSString *)key
                   withCallback:(RCTResponseSenderBlock)callback)
 {
-    // Ensure we're on the method queue
     dispatch_async(self.methodQueue, ^{
-        NSError *error = nil;
-        NMSSHSession* session = [NMSSHSession connectToHost:host
-                                                       port:port
-                                               withUsername:username
-                                                      error:&error];
-        
-        if (error) {
-            RCTLogError(@"Connection error: %@", error);
-            callback(@[@{@"code": @(error.code), @"message": error.localizedDescription}]);
+        NMSSHSession *session =
+            [[NMSSHSession alloc] initWithHost:host
+                                   andUsername:username];
+
+        [session connect];
+
+        if (!session.connected) {
+            callback(@[@{ @"message": @"Connection failed" }]);
             return;
         }
-        
-        if (session && session.connected) {
-            BOOL authenticated = NO;
-            
-            if ([passwordOrKey isKindOfClass:[NSString class]]) {
-                authenticated = [session authenticateByPassword:passwordOrKey error:&error];
-            } else if ([passwordOrKey isKindOfClass:[NSDictionary class]]) {
-                NSString *privateKey = [RCTConvert NSString:passwordOrKey[@"privateKey"]];
-                NSString *publicKey = [RCTConvert NSString:passwordOrKey[@"publicKey"]];
-                NSString *passphrase = [RCTConvert NSString:passwordOrKey[@"passphrase"]];
-                
-                if (privateKey) {
-                    authenticated = [session authenticateByInMemoryPublicKey:publicKey
-                                                                  privateKey:privateKey
-                                                                 andPassword:passphrase
-                                                                       error:&error];
-                }
-            }
-            
-            if (authenticated && session.authorized) {
-                SSHClient* client = [[SSHClient alloc] init];
-                client._session = session;
-                client._key = key;
-                [[self clientPool] setObject:client forKey:key];
-                RCTLogInfo(@"Session connected to %@", host);
-                callback(@[[NSNull null]]);
-            } else {
-                [session disconnect];
-                NSString *errorMsg = error ? error.localizedDescription : @"Authentication failed";
-                RCTLogError(@"Authentication failed: %@", errorMsg);
-                callback(@[@{@"code": @-1, @"message": errorMsg}]);
-            }
-        } else {
-            NSString *errorMsg = @"Failed to establish connection";
-            RCTLogError(@"%@ to host %@", errorMsg, host);
-            callback(@[@{@"code": @-1, @"message": errorMsg}]);
+
+        BOOL authenticated = NO;
+
+        if ([passwordOrKey isKindOfClass:[NSString class]]) {
+            authenticated =
+                [session authenticateByPassword:passwordOrKey];
         }
+        else if ([passwordOrKey isKindOfClass:[NSDictionary class]]) {
+            NSString *privateKey = passwordOrKey[@"privateKey"];
+            NSString *publicKey  = passwordOrKey[@"publicKey"];
+            NSString *passphrase = passwordOrKey[@"passphrase"];
+
+            authenticated =
+                [session authenticateByPublicKey:publicKey
+                                       privateKey:privateKey
+                                      andPassword:passphrase];
+        }
+
+        if (!authenticated || !session.authorized) {
+            [session disconnect];
+            callback(@[@{ @"message": @"Authentication failed" }]);
+            return;
+        }
+
+        SSHClient *client = [SSHClient new];
+        client._session = session;
+        client._key = key;
+        client.delegate = self;
+
+        self.clientPool[key] = client;
+
+        callback(@[[NSNull null]]);
     });
 }
 
-// Helper method for error handling
-- (id)formatError:(NSError *)error {
-    if (!error) {
-        return [NSNull null];
-    }
-    return @{
-        @"code": @(error.code),
-        @"message": error.localizedDescription ?: @"Unknown error",
-        @"domain": error.domain
-    };
-}
+#pragma mark - Execute
 
-// Update execute method to use new error handling
 RCT_EXPORT_METHOD(execute:(NSString *)command
-                  withKey:(nonnull NSString*)key
-                  withCallback:(RCTResponseSenderBlock)callback) {
+                  withKey:(NSString *)key
+                  withCallback:(RCTResponseSenderBlock)callback)
+{
     dispatch_async(self.methodQueue, ^{
-        SSHClient* client = [self clientForKey:key];
+        SSHClient *client = [self clientForKey:key];
         if (!client) {
-            callback(@[@{@"code": @-1, @"message": @"Unknown client"}]);
+            callback(@[@{ @"message": @"Client not found" }]);
             return;
         }
-        
-        NMSSHSession* session = client._session;
-        if (![self isConnected:session withCallback:callback]) {
-            return;
-        }
-        
-        NSError* error = nil;
-        NSString* response = [session.channel execute:command error:&error timeout:@10];
+
+        NSError *error = nil;
+        NSString *output =
+            [client._session.channel execute:command
+                                       error:&error
+                                     timeout:@10];
+
         if (error) {
-            RCTLogError(@"Error executing command: %@", error);
-            callback(@[[self formatError:error]]);
+            callback(@[@{
+                @"code": @(error.code),
+                @"message": error.localizedDescription
+            }]);
         } else {
-            callback(@[[NSNull null], response ?: @""]);
+            callback(@[[NSNull null], output ?: @""]);
         }
     });
 }
+
+@end

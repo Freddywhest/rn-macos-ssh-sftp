@@ -10,26 +10,23 @@ Pod::Spec.new do |s|
   s.homepage         = package['homepage']
   s.authors          = package['author']['name']
   s.source           = { :git => package['repository']['url'], :tag => s.version }
-  s.source_files     = 'macos/**/*.{h,m}'
   s.requires_arc     = true
   s.platforms        = { :osx => '13.0' }
 
-  # 👇 REQUIRED for NMSSH
-  s.frameworks = [
-    'Foundation',
-    'Security',
-    'CFNetwork'
-  ]
-
-  s.osx.vendored_libraries = 'Vendor/Libraries/lib/libssh2.a', 'Vendor/Libraries/lib/libssl.a', 'Vendor/Libraries/lib/libcrypto.a'
-  s.osx.source_files       = 'Vendor', 'Vendor/Libraries/**/*.h'
-  s.osx.public_header_files  = 'Vendor/Libraries/**/*.h'
-
-  s.xcconfig = {
-    "OTHER_LDFLAGS" => "-ObjC",
-  }
-
+  # Frameworks needed
+  s.frameworks = ['Foundation', 'Security', 'CFNetwork']
   s.libraries = 'z'
+  s.xcconfig = { 'OTHER_LDFLAGS' => '-ObjC' }
 
+  # React dependency
   s.dependency 'React'
+
+  # Include all your source files
+  s.source_files = 'macos/**/*.{h,m}', 'macos/Vendor/**/*.{h,m}'
+
+  # Make NMSSH and your vendor headers public
+  s.public_header_files = 'macos/NMSSH/**/*.h', 'macos/Vendor/**/*.h'
+
+  # Include static libraries
+  s.vendored_libraries = 'macos/Vendor/Libraries/lib/*.a'
 end
