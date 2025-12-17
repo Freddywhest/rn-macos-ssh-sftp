@@ -1,7 +1,7 @@
 {
-  "name": "@speedshield/react-native-ssh-sftp",
-  "version": "1.5.25",
-  "description": "SSH and SFTP client library for React Native",
+  "name": "rn-macos-ssh-sftp",
+  "version": "0.0.2",
+  "description": "SSH and SFTP client library for React Native on macOS",
   "main": "lib/sshclient.js",
   "scripts": {
     "_postinstall": "npm run compile",
@@ -15,17 +15,18 @@
   "keywords": [
     "react-native",
     "ssh",
-    "sftp"
+    "sftp",
+    "macos"
   ],
-  "homepage": "https://github.com/SpeedshieldTechnologies/react-native-ssh-sftp#readme",
+  "homepage": "https://github.com/FreddyWhets/rn-macos-ssh-sftp#readme",
   "bugs": {
-    "url": "https://github.com/SpeedshieldTechnologies/react-native-ssh-sftp/issues",
-    "email": "pnguyen@speedshield.com"
+    "url": "https://github.com/FreddyWhets/rn-macos-ssh-sftp/issues",
+    "email": "alfrednti5000@gmail.com"
   },
   "author": {
-    "name": "Phung Nguyen",
-    "email": "pnguyen@speedshield.com",
-    "url": "https://github.com/SpeedshieldTechnologies/react-native-ssh-sftp"
+    "name": "Alfred Nti",
+    "email": "alfrednti5000@gmail.com",
+    "url": "https://github.com/FreddyWhets/rn-macos-ssh-sftp"
   },
   "contributors": [
     {
@@ -50,6 +51,11 @@
       "name": "Qian Sha",
       "email": "x_ash@qq.com",
       "url": "https://github.com/shaqian/react-native-ssh-sftp"
+    },
+    {
+      "name": "Alfred Nti",
+      "email": "alfrednti5000@gmail.com",
+      "url": "https://github.com/FreddyWhets/rn-macos-ssh-sftp"
     }
   ],
   "license": "MIT",
@@ -58,11 +64,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SpeedshieldTechnologies/react-native-ssh-sftp.git"
+    "url": "git+https://github.com/FreddyWhets/rn-macos-ssh-sftp.git"
   },
   "files": [
     "android/",
-    "ios/",
+    "macos/",
     "lib/",
     "RNSSHClient.podspec"
   ],

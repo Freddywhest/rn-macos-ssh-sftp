@@ -10,9 +10,9 @@ Pod::Spec.new do |s|
   s.homepage         = package['homepage']
   s.authors          = package['author']['name']
   s.source           = { :git => package['repository']['url'], :tag => s.version }
-  s.source_files     = 'ios/**/*.{h,m}'
+  s.source_files     = 'macos/**/*.{h,m}'
   s.requires_arc     = true
-  s.platforms        = { :ios => "11.0", :tvos => "9.2" }
+  s.platforms        = { :osx => '10.0' }
 
   s.dependency 'React'
   s.dependency 'NMSSH'
