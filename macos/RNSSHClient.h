@@ -4,5 +4,5 @@
 
 #import "SSHClient.h"
 
-@interface RNSSHClient: RCTEventEmitter <RCTBridgeModule, NMSSHChannelDelegate, SSHClientDelegate>
+@interface RNSSHClient : RCTEventEmitter <RCTBridgeModule, NMSSHChannelDelegate, SSHClientDelegate>
 @end

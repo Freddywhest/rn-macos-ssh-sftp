@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680873B62EF2C82E00DEFFE7 /* NMSSHConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 680873B02EF2C82E00DEFFE7 /* NMSSHConfig.m */; };
+		680873B72EF2C82E00DEFFE7 /* NMSFTPFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 680873A92EF2C82E00DEFFE7 /* NMSFTPFile.m */; };
+		680873B82EF2C82E00DEFFE7 /* socket_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 680873A02EF2C82E00DEFFE7 /* socket_helper.m */; };
+		680873B92EF2C82E00DEFFE7 /* NMSSHLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6808739E2EF2C82E00DEFFE7 /* NMSSHLogger.m */; };
+		680873BA2EF2C82E00DEFFE7 /* NMSSHChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 680873AE2EF2C82E00DEFFE7 /* NMSSHChannel.m */; };
+		680873BB2EF2C82E00DEFFE7 /* NMSFTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 680873A72EF2C82E00DEFFE7 /* NMSFTP.m */; };
+		680873BC2EF2C82E00DEFFE7 /* NMSSHHostConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 680873B22EF2C82E00DEFFE7 /* NMSSHHostConfig.m */; };
+		680873BD2EF2C82E00DEFFE7 /* NMSSHSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 680873B42EF2C82E00DEFFE7 /* NMSSHSession.m */; };
+		680873C02EF2C88500DEFFE7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680873BF2EF2C88500DEFFE7 /* CFNetwork.framework */; };
+		680873C22EF2C89000DEFFE7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680873C12EF2C89000DEFFE7 /* Security.framework */; };
+		680873C42EF2C89D00DEFFE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 680873C32EF2C89D00DEFFE7 /* Foundation.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* RNSSHClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNSSHClient.m */; };
 		F25E160E20569FB6003186B4 /* SSHClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F25E160D20569FB5003186B4 /* SSHClient.m */; };
 /* End PBXBuildFile section */
@@ -25,6 +36,32 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNSSHClient.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNSSHClient.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6808739C2EF2C82E00DEFFE7 /* NMSSH+Protected.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NMSSH+Protected.h"; sourceTree = "<group>"; };
+		6808739D2EF2C82E00DEFFE7 /* NMSSHLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSHLogger.h; sourceTree = "<group>"; };
+		6808739E2EF2C82E00DEFFE7 /* NMSSHLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMSSHLogger.m; sourceTree = "<group>"; };
+		6808739F2EF2C82E00DEFFE7 /* socket_helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = socket_helper.h; sourceTree = "<group>"; };
+		680873A02EF2C82E00DEFFE7 /* socket_helper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = socket_helper.m; sourceTree = "<group>"; };
+		680873A22EF2C82E00DEFFE7 /* NMSSHChannelDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSHChannelDelegate.h; sourceTree = "<group>"; };
+		680873A32EF2C82E00DEFFE7 /* NMSSHSessionDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSHSessionDelegate.h; sourceTree = "<group>"; };
+		680873A52EF2C82E00DEFFE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		680873A62EF2C82E00DEFFE7 /* NMSFTP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSFTP.h; sourceTree = "<group>"; };
+		680873A72EF2C82E00DEFFE7 /* NMSFTP.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMSFTP.m; sourceTree = "<group>"; };
+		680873A82EF2C82E00DEFFE7 /* NMSFTPFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSFTPFile.h; sourceTree = "<group>"; };
+		680873A92EF2C82E00DEFFE7 /* NMSFTPFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMSFTPFile.m; sourceTree = "<group>"; };
+		680873AA2EF2C82E00DEFFE7 /* NMSSH.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSH.h; sourceTree = "<group>"; };
+		680873AB2EF2C82E00DEFFE7 /* NMSSH-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NMSSH-Info.plist"; sourceTree = "<group>"; };
+		680873AC2EF2C82E00DEFFE7 /* NMSSH-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NMSSH-Prefix.pch"; sourceTree = "<group>"; };
+		680873AD2EF2C82E00DEFFE7 /* NMSSHChannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSHChannel.h; sourceTree = "<group>"; };
+		680873AE2EF2C82E00DEFFE7 /* NMSSHChannel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMSSHChannel.m; sourceTree = "<group>"; };
+		680873AF2EF2C82E00DEFFE7 /* NMSSHConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSHConfig.h; sourceTree = "<group>"; };
+		680873B02EF2C82E00DEFFE7 /* NMSSHConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMSSHConfig.m; sourceTree = "<group>"; };
+		680873B12EF2C82E00DEFFE7 /* NMSSHHostConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSHHostConfig.h; sourceTree = "<group>"; };
+		680873B22EF2C82E00DEFFE7 /* NMSSHHostConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMSSHHostConfig.m; sourceTree = "<group>"; };
+		680873B32EF2C82E00DEFFE7 /* NMSSHSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NMSSHSession.h; sourceTree = "<group>"; };
+		680873B42EF2C82E00DEFFE7 /* NMSSHSession.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NMSSHSession.m; sourceTree = "<group>"; };
+		680873BF2EF2C88500DEFFE7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		680873C12EF2C89000DEFFE7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		680873C32EF2C89D00DEFFE7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B3E7B5881CC2AC0600A0062D /* RNSSHClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSSHClient.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNSSHClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSSHClient.m; sourceTree = "<group>"; };
 		F25E160C20569F97003186B4 /* SSHClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SSHClient.h; sourceTree = "<group>"; };
@@ -36,6 +73,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				680873C42EF2C89D00DEFFE7 /* Foundation.framework in Frameworks */,
+				680873C22EF2C89000DEFFE7 /* Security.framework in Frameworks */,
+				680873C02EF2C88500DEFFE7 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,12 +93,70 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				680873B52EF2C82E00DEFFE7 /* NMSSH */,
 				F25E160C20569F97003186B4 /* SSHClient.h */,
 				F25E160D20569FB5003186B4 /* SSHClient.m */,
 				B3E7B5881CC2AC0600A0062D /* RNSSHClient.h */,
 				B3E7B5891CC2AC0600A0062D /* RNSSHClient.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				680873BE2EF2C88500DEFFE7 /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		680873A12EF2C82E00DEFFE7 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				6808739C2EF2C82E00DEFFE7 /* NMSSH+Protected.h */,
+				6808739D2EF2C82E00DEFFE7 /* NMSSHLogger.h */,
+				6808739E2EF2C82E00DEFFE7 /* NMSSHLogger.m */,
+				6808739F2EF2C82E00DEFFE7 /* socket_helper.h */,
+				680873A02EF2C82E00DEFFE7 /* socket_helper.m */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		680873A42EF2C82E00DEFFE7 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				680873A22EF2C82E00DEFFE7 /* NMSSHChannelDelegate.h */,
+				680873A32EF2C82E00DEFFE7 /* NMSSHSessionDelegate.h */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		680873B52EF2C82E00DEFFE7 /* NMSSH */ = {
+			isa = PBXGroup;
+			children = (
+				680873A12EF2C82E00DEFFE7 /* Config */,
+				680873A42EF2C82E00DEFFE7 /* Protocols */,
+				680873A52EF2C82E00DEFFE7 /* Info.plist */,
+				680873A62EF2C82E00DEFFE7 /* NMSFTP.h */,
+				680873A72EF2C82E00DEFFE7 /* NMSFTP.m */,
+				680873A82EF2C82E00DEFFE7 /* NMSFTPFile.h */,
+				680873A92EF2C82E00DEFFE7 /* NMSFTPFile.m */,
+				680873AA2EF2C82E00DEFFE7 /* NMSSH.h */,
+				680873AB2EF2C82E00DEFFE7 /* NMSSH-Info.plist */,
+				680873AC2EF2C82E00DEFFE7 /* NMSSH-Prefix.pch */,
+				680873AD2EF2C82E00DEFFE7 /* NMSSHChannel.h */,
+				680873AE2EF2C82E00DEFFE7 /* NMSSHChannel.m */,
+				680873AF2EF2C82E00DEFFE7 /* NMSSHConfig.h */,
+				680873B02EF2C82E00DEFFE7 /* NMSSHConfig.m */,
+				680873B12EF2C82E00DEFFE7 /* NMSSHHostConfig.h */,
+				680873B22EF2C82E00DEFFE7 /* NMSSHHostConfig.m */,
+				680873B32EF2C82E00DEFFE7 /* NMSSHSession.h */,
+				680873B42EF2C82E00DEFFE7 /* NMSSHSession.m */,
+			);
+			path = NMSSH;
+			sourceTree = "<group>";
+		};
+		680873BE2EF2C88500DEFFE7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				680873C32EF2C89D00DEFFE7 /* Foundation.framework */,
+				680873C12EF2C89000DEFFE7 /* Security.framework */,
+				680873BF2EF2C88500DEFFE7 /* CFNetwork.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -100,6 +198,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
@@ -117,6 +216,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				680873B62EF2C82E00DEFFE7 /* NMSSHConfig.m in Sources */,
+				680873B72EF2C82E00DEFFE7 /* NMSFTPFile.m in Sources */,
+				680873B82EF2C82E00DEFFE7 /* socket_helper.m in Sources */,
+				680873B92EF2C82E00DEFFE7 /* NMSSHLogger.m in Sources */,
+				680873BA2EF2C82E00DEFFE7 /* NMSSHChannel.m in Sources */,
+				680873BB2EF2C82E00DEFFE7 /* NMSFTP.m in Sources */,
+				680873BC2EF2C82E00DEFFE7 /* NMSSHHostConfig.m in Sources */,
+				680873BD2EF2C82E00DEFFE7 /* NMSSHSession.m in Sources */,
 				B3E7B58A1CC2AC0600A0062D /* RNSSHClient.m in Sources */,
 				F25E160E20569FB6003186B4 /* SSHClient.m in Sources */,
 			);
@@ -147,6 +254,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -162,10 +270,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					Path,
+					"Recursive/**",
+					"$(PODS_TARGET_SRCROOT)/macos",
+					"$(PODS_TARGET_SRCROOT)/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -191,6 +305,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -199,9 +314,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PODS_TARGET_SRCROOT)/**",
+					"$(PODS_TARGET_SRCROOT)/macos/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -215,8 +334,11 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../../macos/Pods/Headers/Public/**",
+					"$(SRCROOT)/../../../node_modules/react-native-macos/React/**",
+					"$(PODS_ROOT)/Headers/Public/NMSSH/**",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNSSHClient;
 				SKIP_INSTALL = YES;
@@ -232,8 +354,13 @@
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
 					"$(SRCROOT)/../../../macos/Pods/Headers/Public/**",
+					"$(PODS_ROOT)/Headers/Public/NMSSH/**",
+					"$(SRCROOT)/../../../node_modules/react-native-macos/React/**",
+					"$(SRCROOT)/macos/**",
+					"$(SRCROOT)/macos/NMSSH/**",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNSSHClient;
 				SKIP_INSTALL = YES;

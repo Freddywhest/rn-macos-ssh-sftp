@@ -1,6 +1,6 @@
 {
   "name": "rn-macos-ssh-sftp",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "description": "SSH and SFTP client library for React Native on macOS",
   "main": "lib/sshclient.js",
   "scripts": {
