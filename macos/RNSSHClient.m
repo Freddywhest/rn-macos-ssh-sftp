@@ -181,22 +181,67 @@ RCT_EXPORT_METHOD(execute:(NSString *)command
 {
     dispatch_async(self.methodQueue, ^{
         SSHClient *client = [self clientForKey:key];
-        if (!client) {
-            callback(@[@{@"message": @"Client not found"}]);
+        if (!client || !client.session || !client.session.connected) {
+            callback(@[@{@"message": @"SSH client not connected"}]);
             return;
         }
 
         NSError *error = nil;
-        NSString *output =
-        [client.session.channel execute:command error:&error timeout:@10];
 
+        // Wrap command to capture stderr + exit code
+        NSString *wrappedCommand =
+        [NSString stringWithFormat:
+         @"sh -c '%@ 2>&1; echo \"\\n__EXIT_CODE:$?\"'",
+         command];
+
+        NSString *output =
+        [client.session.channel execute:wrappedCommand
+                                  error:&error
+                                timeout:@10];
+
+        // SSH-level error (network, auth, etc.)
         if (error) {
-            callback(@[@{@"message": error.localizedDescription}]);
-        } else {
-            callback(@[[NSNull null], output ?: @""]);
+            callback(@[@{
+                @"message": error.localizedDescription ?: @"SSH execution failed"
+            }]);
+            return;
         }
+
+        if (!output.length) {
+            callback(@[@{@"message": @"Command produced no output"}]);
+            return;
+        }
+
+        // Parse exit code
+        NSRange exitRange = [output rangeOfString:@"__EXIT_CODE:"];
+        NSInteger exitCode = 0;
+
+        if (exitRange.location != NSNotFound) {
+            NSString *exitPart = [output substringFromIndex:exitRange.location];
+            exitCode = [[exitPart stringByReplacingOccurrencesOfString:@"__EXIT_CODE:"
+                                                            withString:@""]
+                        integerValue];
+
+            // Remove exit code from output
+            output = [output substringToIndex:exitRange.location];
+            output = [output stringByTrimmingCharactersInSet:
+                      [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        }
+
+        // Command-level error
+        if (exitCode != 0) {
+            callback(@[@{
+                @"message": output.length ? output : @"Command failed",
+                @"code": @(exitCode)
+            }]);
+            return;
+        }
+
+        // Success
+        callback(@[[NSNull null], output ?: @""]);
     });
 }
+
 
 #pragma mark - SHELL (PTY)
 RCT_EXPORT_METHOD(startShell:(NSString *)key
