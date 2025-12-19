@@ -20,7 +20,7 @@ interface RNSSHClientType {
 
   writeToShell(key: string, command: string, callback: (error: unknown) => void): void;
 
-  disconnect(key: string): void;
+  disconnect(key: string, callback: (error: unknown) => void): void;
 
   connectSFTP(key: string, callback: (error: unknown) => void): void;
 
@@ -150,10 +150,15 @@ export default class SSHClient {
     });
   }
 
-  closeShell(): void {
-    if (!this._activeShell) return;
-    RNSSHClientTyped.disconnect(this._key); // native closes session
-    this._activeShell = false;
+  closeShell(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this._activeShell) return;
+      this._activeShell = false;
+      RNSSHClientTyped.disconnect(this._key, (err: CBError) => {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
   }
 
   connectSFTP(): Promise<void> {
@@ -223,9 +228,14 @@ export default class SSHClient {
   }
 
 
-  disconnect(): void {
-    if (this._activeShell) this.closeShell();
-    if (this._activeSFTP) this._activeSFTP = false;
-    RNSSHClientTyped.disconnect(this._key);
+  disconnect(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this._activeShell) this.closeShell();
+      if (this._activeSFTP) this._activeSFTP = false;
+      RNSSHClientTyped.disconnect(this._key, (err: CBError) => {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
   }
 }
