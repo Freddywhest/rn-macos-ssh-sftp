@@ -7,21 +7,12 @@ SSH and SFTP client library for React Native on MacOS.
 ## Installation
 
 ```bash
-npm install @speedshield/react-native-ssh-sftp
+npm install rn-macos-ssh-sftp
 ```
 
 ### macOS
 
-Update your `Podfile` to use the [aanah0's fork](https://github.com/aanah0/NMSSH) of [NMSSH](https://github.com/NMSSH/NMSSH). Note that we use the forked version to give us a required later version of libssh. Your `Podfile` is located in your React Native project at `./macos/Podfile`.
-
-```ruby
-target '[your project's name]' do
-  pod 'NMSSH', :git => 'https://github.com/aanah0/NMSSH.git' # <-- add this line
-  # ... rest of your target details ...
-end
-```
-
-And then run `pod install` in your `./macos` directory.
+Run `pod install` in your `./macos` directory.
 
 ```bash
 cd macos
@@ -62,22 +53,35 @@ All functions that run asynchronously where we have to wait for a result returns
 ### Create a client using password authentication
 
 ```javascript
-import SSHClient from '@speedshield/react-native-ssh-sftp';
+import SSHClient from 'rn-macos-ssh-sftp';
 
-SSHClient.connectWithPassword('10.0.0.10', 22, 'user', 'password').then((client) => {
-  /*...*/
-});
-```
+try{
+  // Create SSH client with private keys
+   const client = new SSHClient(
+      '123.123.123.1', // server/ssh ip/host
+      'port',
+      'username',
+      {
+        privateKey,
+        passphrase: '1234', // replace with your passphrase
+      },
+      10, // timeout
+    );
+  
+    // Create SSH client with passowrd
+     const client = new SSHClient(
+      '123.123.123.1', // server/ssh ip/host
+      'port',
+      'username',
+      'password',
+      10, // timeout
+    );
 
-### Create a client using public key authentication
-
-```javascript
-import SSHClient from 'react-native-ssh-sftp';
-
-SSHClient.connectWithKey('10.0.0.10', 22, 'user', (privateKey = '-----BEGIN RSA...'), passphrase).then((client) => {
-  /*...*/
-});
-```
+    await client.connect();
+    console.log('SSH connected successfully...');
+}catch(e){
+  console.error(error)
+}
 
 #### Public key authentication is also supported
 
@@ -116,7 +120,7 @@ client.startShell(ptyType).then(() => {
 #### Read from shell
 
 ```javascript
-client.on('Shell', (event) => {
+client.on('shell', (event) => {
   if (event) console.warn(event);
 });
 ```
@@ -150,39 +154,7 @@ client.connectSFTP().then(() => {
 
 ```javascript
 const path = '.';
-client.sftpLs(path).then((response) => console.warn(response));
-```
-
-#### Create directory
-
-```javascript
-client.sftpMkdir('dirName').then(() => {
-  /*...*/
-});
-```
-
-#### Rename file or directory
-
-```javascript
-client.sftpRename('oldName', 'newName').then(() => {
-  /*...*/
-});
-```
-
-#### Remove directory
-
-```javascript
-client.sftpRmdir('dirName').then(() => {
-  /*...*/
-});
-```
-
-#### Remove file
-
-```javascript
-client.sftpRm('fileName').then(() => {
-  /*...*/
-});
+client.list(path).then((response) => console.warn(response));
 ```
 
 #### Download file
@@ -193,7 +165,7 @@ client.sftpDownload('[path-to-remote-file]', '[path-to-local-directory]').then((
 });
 
 // Download progress (setup before call)
-client.on('DownloadProgress', (event) => {
+client.on('download', (event) => {
   console.warn(event);
 });
 
@@ -209,23 +181,21 @@ client.sftpUpload('[path-to-local-file]', '[path-to-remote-directory]').then(() 
 });
 
 // Upload progress (setup before call)
-client.on('UploadProgress', (event) => {
+client.on('upload', (event) => {
   console.warn(event);
 });
 
-// Cancel upload
-client.sftpCancelUpload();
 ```
 
 #### Close SFTP
 
 ```javascript
-client.disconnectSFTP();
+client.disconnect();
 ```
 
 ## Example app
 
-You can find a very simple example app for the usage of this library [here](https://github.com/dylankenneally/react-native-ssh-sftp-example).
+You can find a very simple example app for the usage of this library [here]().
 
 ## Credits
 

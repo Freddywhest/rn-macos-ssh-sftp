@@ -1,8 +1,18 @@
 {
   "name": "rn-macos-ssh-sftp",
-  "version": "0.0.18",
+  "version": "0.0.54",
   "description": "SSH and SFTP client library for React Native on macOS",
-  "main": "lib/sshclient.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "react-native": "lib/index.js",
+  "homepage": "https://github.com/FreddyWhest/rn-macos-ssh-sftp#readme",
+  "files": [
+    "lib",
+    "macos",
+    "*.podspec",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "_postinstall": "npm run compile",
     "prepare": "husky",
@@ -14,78 +24,29 @@
   },
   "keywords": [
     "react-native",
+    "macos",
     "ssh",
     "sftp",
-    "macos"
+    "file-transfer",
+    "remote-access"
   ],
-  "homepage": "https://github.com/FreddyWhets/rn-macos-ssh-sftp#readme",
-  "bugs": {
-    "url": "https://github.com/FreddyWhets/rn-macos-ssh-sftp/issues",
-    "email": "alfrednti5000@gmail.com"
-  },
-  "author": {
-    "name": "Alfred Nti",
-    "email": "alfrednti5000@gmail.com",
-    "url": "https://github.com/FreddyWhets/rn-macos-ssh-sftp"
-  },
-  "contributors": [
-    {
-      "name": "Dylan Kenneally",
-      "email": "github@dylankenneally.com",
-      "url": "https://github.com/dylankenneally/react-native-ssh-sftp"
-    },
-    {
-      "name": "Emmanuel Natividad",
-      "url": "https://github.com/enatividad/react-native-ssh-sftp"
-    },
-    {
-      "name": "Gabriel Paul \"Cley Faye\" Risterucci",
-      "email": "gabriel@keeex.net",
-      "url": "https://github.com/KeeeX/react-native-ssh-sftp"
-    },
-    {
-      "name": "Bishoy Mikhae",
-      "url": "https://github.com/MrBmikhael/react-native-ssh-sftp"
-    },
-    {
-      "name": "Qian Sha",
-      "email": "x_ash@qq.com",
-      "url": "https://github.com/shaqian/react-native-ssh-sftp"
-    },
-    {
-      "name": "Alfred Nti",
-      "email": "alfrednti5000@gmail.com",
-      "url": "https://github.com/FreddyWhets/rn-macos-ssh-sftp"
-    }
-  ],
-  "license": "MIT",
-  "peerDependencies": {
-    "react-native": "*"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FreddyWhets/rn-macos-ssh-sftp.git"
+    "url": "git+https://github.com/FreddyWhest/rn-macos-ssh-sftp.git"
   },
-  "files": [
-    "android/",
-    "macos/",
-    "lib/",
-    "RNSSHClient.podspec"
-  ],
+  "author": "Alfred Nti <alfrednti5000@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-macos": "*"
+  },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
-    "@typescript-eslint/parser": "^7.13.1",
-    "cross-env": "^7.0.3",
-    "husky": "^9.0.11",
-    "typescript": "^5.4.5"
-  },
-  "engines": {
-    "npm": ">=9.5.0 <11.0.0",
-    "node": ">=18.16.0 <=24"
-  },
-  "dependencies": {
-    "-": "^0.0.1",
-    "D": "^1.0.0",
-    "eslint": "^8.57.0"
+    "@types/react": "^19.1.03",
+    "typescript": "^5.8.3",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.3",
+    "react": "19.1.1",
+    "react-native": "0.82.0"
   }
 }
